@@ -21,6 +21,12 @@ public class ProductsController
   public List<Product> getAll() {
     return productService.getAll();
   }
+
+  @GetMapping("{id}")
+  public Product getById(@PathVariable int id) {
+      return productService.getById(id);
+  }
+
   @PostMapping()
   public Product add(@RequestBody Product product) {
     return productService.add(product);
