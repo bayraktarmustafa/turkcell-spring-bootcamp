@@ -24,10 +24,24 @@ public class ProductServiceImpl implements ProductService
 
   @Override
   public Product add(Product product) {
+    // İŞ KURALLARI
+    Product product1 = productList
+            .stream()
+            .filter(p -> p.getName().equals(product.getName())).findAny()
+            .orElse(null);
+
+    if(product1 != null) {
+      throw new RuntimeException("Product already exists");
+    }
+    //
+
+
     // Identification
     Random random = new Random();
     product.setId(random.nextInt(1000));
     productList.add(product);
+
+
     return product;
   }
 

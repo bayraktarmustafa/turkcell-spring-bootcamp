@@ -1,6 +1,8 @@
 package com.turkcell.spring.starter.entity;
 
-import lombok.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 //@Getter
 //@Setter
@@ -9,8 +11,15 @@ import lombok.*;
 //@Data
 public class Product {
   private int id;
+
+  @NotBlank
+  @Length(min=1, max = 20)
   private String name;
+
+  @Min(1)
   private double price;
+
+  @Min(0)
   private int stock;
 
   public int getId() {

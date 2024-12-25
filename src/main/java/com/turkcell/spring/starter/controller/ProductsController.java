@@ -2,6 +2,7 @@ package com.turkcell.spring.starter.controller;
 import com.turkcell.spring.starter.entity.Product;
 import com.turkcell.spring.starter.service.ProductService;
 import com.turkcell.spring.starter.service.ProductServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,18 @@ public class ProductsController
   }
 
   @PostMapping()
-  public Product add(@RequestBody Product product) {
+  public Product add(@RequestBody @Valid Product product) {
     return productService.add(product);
+  }
+  // 8:30
+  // Cuma'ya ödev.
+  @DeleteMapping("{id}")
+  public String delete(@PathVariable int id) {
+    return "Silindi ?? Bulunamadı";
+  }
+  // Cuma'ya ödev.
+  @PutMapping()
+  public Product update(@RequestBody Product product) {
+      return product; // Güncelledikten sonra.
   }
 }
