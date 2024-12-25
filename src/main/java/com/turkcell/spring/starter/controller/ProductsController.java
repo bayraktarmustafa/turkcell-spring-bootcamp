@@ -3,6 +3,7 @@ package com.turkcell.spring.starter.controller;
 // Schema => HTTP isteğinin tüm yapısı
 
 
+import com.turkcell.spring.starter.entity.Product;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
@@ -26,9 +27,15 @@ public class ProductsController
     return "Good Bye, " + name;
   }
 
+  @PostMapping
+  public Product addProduct(@RequestBody Product product) {
+    product.setId(1);
+    return product;
+  }
 
 }
 // Basit veriler -> metinsel -> Query String, Path Variable (URL üzerinden)
+// Kompleks veriler -> Class -> Body
 
 // @RequestParam => Query String
 // @PathVariable => Path
