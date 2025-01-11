@@ -1,33 +1,44 @@
 package com.turkcell.spring.starter.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
 
 @Entity // orm bu classı tanıyo
 @Table(name = "products") // orm bu classı db'deki products tablosu ile eşleştirmeye çalışacak.
 public class Product {
-
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="id") // eğer isimler birebir aynı ise bu anotasyon opsiyoneldir.
-  private int id;
+  private Integer id;
 
   @Column(name="name")
   private String name;
 
   @Column(name="unit_price")
-  private double unitPrice;
+  private BigDecimal unitPrice; // numeric => BigDecimal
 
   @Column(name="stock")
   private int stock;
 
+  // İlişkiler temsil edilirken FK alan
+  // temsil edilmez.
+  @ManyToOne()
+  @JoinColumn(name="category_id")
+  private Category category;
 
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -39,11 +50,11 @@ public class Product {
     this.name = name;
   }
 
-  public double getUnitPrice() {
+  public BigDecimal getUnitPrice() {
     return unitPrice;
   }
 
-  public void setUnitPrice(double unitPrice) {
+  public void setUnitPrice(BigDecimal unitPrice) {
     this.unitPrice = unitPrice;
   }
 
@@ -53,5 +64,13 @@ public class Product {
 
   public void setStock(int stock) {
     this.stock = stock;
+  }
+
+  public Category getCategory() {
+    return category;
+  }
+
+  public void setCategory(Category category) {
+    this.category = category;
   }
 }

@@ -1,6 +1,7 @@
 package com.turkcell.spring.starter.service;
 
 import com.turkcell.spring.starter.entity.Product;
+import com.turkcell.spring.starter.repository.ProductRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -15,49 +16,25 @@ import java.util.Random;
 @Service
 public class ProductServiceImpl implements ProductService
 {
-  // In-Memory Çalışma
-  private List<Product> productList;
+  private final ProductRepository productRepository;
 
-  public ProductServiceImpl() {
-    productList = new ArrayList<Product>();
+  public ProductServiceImpl(ProductRepository productRepository) {
+    this.productRepository = productRepository;
   }
 
   @Override
   public Product add(Product product) {
-    // İŞ KURALLARI
-    Product product1 = productList
-            .stream()
-            .filter(p -> p.getName().equals(product.getName())).findAny()
-            .orElse(null);
-
-    if(product1 != null) {
-      throw new RuntimeException("Product already exists");
-    }
-    //
-
-
-    // Identification
-    Random random = new Random();
-    product.setId(random.nextInt(1000));
-    productList.add(product);
-
-
-    return product;
+    return null;
   }
 
   @Override
   public List<Product> getAll() {
-    return productList;
+    return productRepository.findAll();
   }
 
   @Override
   public Product getById(int id) {
-    // Java 19 - Stream API
-    return productList
-            .stream()
-            .filter(product-> product.getId() == id)
-            .findFirst()
-            .orElse(null);
+    return null;
   }
 
 }
