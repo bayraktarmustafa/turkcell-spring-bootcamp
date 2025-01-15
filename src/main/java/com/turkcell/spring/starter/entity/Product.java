@@ -10,25 +10,23 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 
-@Entity // orm bu classı tanıyo
-@Table(name = "products") // orm bu classı db'deki products tablosu ile eşleştirmeye çalışacak.
+@Entity
+@Table(name = "products")
 public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name="id") // eğer isimler birebir aynı ise bu anotasyon opsiyoneldir.
+  @Column(name="id")
   private Integer id;
 
   @Column(name="name")
   private String name;
 
   @Column(name="unit_price")
-  private BigDecimal unitPrice; // numeric => BigDecimal
+  private BigDecimal unitPrice;
 
   @Column(name="stock")
   private int stock;
 
-  // İlişkiler temsil edilirken FK alan
-  // temsil edilmez.
   @ManyToOne()
   @JoinColumn(name="category_id")
   private Category category;

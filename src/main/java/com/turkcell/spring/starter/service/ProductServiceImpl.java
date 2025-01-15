@@ -1,51 +1,61 @@
 package com.turkcell.spring.starter.service;
 
+import com.turkcell.spring.starter.dto.product.CreateProductDto;
+import com.turkcell.spring.starter.dto.product.ProductListingDto;
+import com.turkcell.spring.starter.entity.Category;
 import com.turkcell.spring.starter.entity.Product;
+import com.turkcell.spring.starter.repository.CategoryRepository;
 import com.turkcell.spring.starter.repository.ProductRepository;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-//
-//@Bean
-//@Component
 @Service
 public class ProductServiceImpl implements ProductService
 {
   private final ProductRepository productRepository;
-
-  public ProductServiceImpl(ProductRepository productRepository) {
+  private final CategoryService categoryService;
+  public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService) {
     this.productRepository = productRepository;
+    this.categoryService = categoryService;
   }
 
   @Override
-  public Product add(Product product) {
-    return null;
+  public void add(CreateProductDto createProductDto) {
+    Category category = categoryService
+            .findById(createProductDto.getCategoryId())
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+
+    // Manual Mapping
+    Product product = new Product();
+    product.setName(createProductDto.getName());
+    product.setStock(createProductDto.getStock());
+    product.setUnitPrice(createProductDto.getUnitPrice());
+    product.setCategory(category);
+
+    productRepository.save(product);
   }
 
   @Override
-  public List<Product> getAll() {
-    return productRepository.findAll();
-  }
+  public List<ProductListingDto> getAll() {
+    /*List<Product> products = productRepository.findAll();
 
-  @Override
-  public List<Product> getByName(String name) {
-    return productRepository.searchByCategory(name);
-  }
+    List<ProductListingDto> productListingDtos = new ArrayList<>();
 
-  @Override
-  public List<Product> getByNameAndPrice(String name, BigDecimal price) {
-    return productRepository.searchSql(name, price);
-  }
+    for (Product product : products) {
+      ProductListingDto productListingDto = new ProductListingDto();
+      productListingDto.setId(product.getId());
+      productListingDto.setName(product.getName());
+      productListingDtos.add(productListingDto);
+    }*/
 
-  @Override
-  public Product getById(int id) {
-    return null;
-  }
+    List<ProductListingDto> productListingDtos = productRepository
+            .findAll()
+            .stream()
+            .map((product) -> new ProductListingDto(product.getId(), product.getName()))
+            .toList();
 
+    return productListingDtos;
+  }
 }
