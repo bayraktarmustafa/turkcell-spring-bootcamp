@@ -1,6 +1,7 @@
 package com.turkcell.spring.starter.controller;
 import com.turkcell.spring.starter.dto.product.CreateProductDto;
 import com.turkcell.spring.starter.dto.product.ProductListingDto;
+import com.turkcell.spring.starter.dto.product.UpdateProductDto;
 import com.turkcell.spring.starter.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +27,11 @@ public class ProductsController
   @GetMapping
   public List<ProductListingDto> getAll() {
     return this.productService.getAll();
+  }
+
+  @PutMapping
+  public void update(@RequestBody UpdateProductDto updateProductDto)
+  {
+    this.productService.update(updateProductDto);
   }
 }
