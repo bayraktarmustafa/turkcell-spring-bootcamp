@@ -5,6 +5,7 @@ import com.turkcell.spring.starter.service.ProductServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController()
@@ -21,6 +22,16 @@ public class ProductsController
   @GetMapping()
   public List<Product> getAll() {
     return productService.getAll();
+  }
+
+  @GetMapping("name")
+  public List<Product> getByName(@RequestParam("name") String name) {
+    return productService.getByName(name);
+  }
+  @GetMapping("name-price")
+  public List<Product> getByNameAndPrice(@RequestParam("name") String name, @RequestParam("price") BigDecimal price)
+  {
+    return productService.getByNameAndPrice(name,price);
   }
 
   @GetMapping("{id}")

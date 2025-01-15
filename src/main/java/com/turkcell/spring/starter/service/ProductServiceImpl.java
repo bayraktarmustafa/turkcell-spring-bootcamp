@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,6 +31,16 @@ public class ProductServiceImpl implements ProductService
   @Override
   public List<Product> getAll() {
     return productRepository.findAll();
+  }
+
+  @Override
+  public List<Product> getByName(String name) {
+    return productRepository.findByNameStartingWithOrderByUnitPrice(name);
+  }
+
+  @Override
+  public List<Product> getByNameAndPrice(String name, BigDecimal price) {
+    return productRepository.searchSql(name, price);
   }
 
   @Override
