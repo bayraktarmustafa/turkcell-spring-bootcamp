@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService
 
   @Override
   public List<Product> getByName(String name) {
-    return productRepository.findByNameStartingWithOrderByUnitPrice(name);
+    return productRepository.searchByCategory(name);
   }
 
   @Override

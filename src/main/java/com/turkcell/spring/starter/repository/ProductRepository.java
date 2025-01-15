@@ -27,4 +27,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer>
   // 3- SQL (native)
   @Query(value = "Select * from products p where p.name LIKE %?1% and p.unit_price = ?2", nativeQuery = true)
   List<Product> searchSql(String name, BigDecimal price);
+
+  // ----
+
+
+  @Query(value="Select p from Product p JOIN p.category c where c.name LIKE %:categoryName%", nativeQuery = false)
+  List<Product> searchByCategory(String categoryName);
 }
