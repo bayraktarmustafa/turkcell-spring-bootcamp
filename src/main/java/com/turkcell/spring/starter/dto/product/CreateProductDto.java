@@ -8,10 +8,10 @@ import org.hibernate.validator.constraints.Length;
 import java.math.BigDecimal;
 
 public class CreateProductDto {
-  @NotBlank
-  @Length(min=3)
+  @NotBlank(message = "İsim boş olamaz")
+  @Length(min=3, message = "İsim 3 haneden büyük olmalıdır.")
   private String name;
-  @Min(0)
+  @Min(value = 0, message = "Fiyat 0'dan büyük olmak zorundadır.")
   private BigDecimal unitPrice;
   private int stock;
   private int categoryId;

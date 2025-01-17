@@ -1,6 +1,7 @@
 package com.turkcell.spring.starter.rules;
 
 import com.turkcell.spring.starter.repository.CategoryRepository;
+import com.turkcell.spring.starter.util.exception.type.BusinessException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +14,6 @@ public class CategoryBusinessRules {
 
   public void categoryMustExist(Integer id)
   {
-    categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+    categoryRepository.findById(id).orElseThrow(() -> new BusinessException("Category not found"));
   }
 }

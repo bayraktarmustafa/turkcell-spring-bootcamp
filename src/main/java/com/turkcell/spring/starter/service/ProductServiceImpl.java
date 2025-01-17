@@ -8,6 +8,7 @@ import com.turkcell.spring.starter.entity.Product;
 import com.turkcell.spring.starter.repository.CategoryRepository;
 import com.turkcell.spring.starter.repository.ProductRepository;
 import com.turkcell.spring.starter.rules.CategoryBusinessRules;
+import com.turkcell.spring.starter.util.exception.type.BusinessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ProductServiceImpl implements ProductService
             .orElse(null);
 
     if(productWithSameName != null)
-      throw new RuntimeException("Product already exists");
+      throw new BusinessException("Product already exists");
 
 
     Product product = new Product();
@@ -65,9 +66,9 @@ public class ProductServiceImpl implements ProductService
             .orElse(null);
 
     if(productWithSameName != null)
-      throw new RuntimeException("Product already exists");
+      throw new BusinessException("Product already exists");
 
-    Product productToUpdate = productRepository.findById(updateProductDto.getId()).orElseThrow(() -> new RuntimeException("Product not found"));
+    Product productToUpdate = productRepository.findById(updateProductDto.getId()).orElseThrow(() -> new BusinessException("Product not found"));
     productToUpdate.setName(updateProductDto.getName());
     productToUpdate.setStock(updateProductDto.getStock());
     productToUpdate.setUnitPrice(updateProductDto.getUnitPrice());
