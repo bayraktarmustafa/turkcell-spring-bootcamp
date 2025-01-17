@@ -1,10 +1,17 @@
 package com.turkcell.spring.starter.dto.product;
 
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+
 import java.math.BigDecimal;
 
 public class CreateProductDto {
+  @NotBlank
+  @Length(min=3)
   private String name;
+  @Min(0)
   private BigDecimal unitPrice;
   private int stock;
   private int categoryId;

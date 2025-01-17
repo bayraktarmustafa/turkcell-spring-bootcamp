@@ -2,13 +2,9 @@ package com.turkcell.spring.starter.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
-
 
 @Entity
 @Table(name = "products")
@@ -30,7 +26,6 @@ public class Product {
   @ManyToOne()
   @JoinColumn(name="category_id")
   private Category category;
-
 
   public Integer getId() {
     return id;

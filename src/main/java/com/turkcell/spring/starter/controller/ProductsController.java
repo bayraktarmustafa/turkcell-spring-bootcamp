@@ -3,6 +3,7 @@ import com.turkcell.spring.starter.dto.product.CreateProductDto;
 import com.turkcell.spring.starter.dto.product.ProductListingDto;
 import com.turkcell.spring.starter.dto.product.UpdateProductDto;
 import com.turkcell.spring.starter.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class ProductsController
   }
 
   @PostMapping
-  public void add(@RequestBody CreateProductDto createProductDto)
+  public void add(@RequestBody @Valid CreateProductDto createProductDto)
   {
     this.productService.add(createProductDto);
   }
