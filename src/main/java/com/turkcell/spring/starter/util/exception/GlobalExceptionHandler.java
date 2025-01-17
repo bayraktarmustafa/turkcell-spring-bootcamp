@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler
 {
-  @ExceptionHandler({Exception.class})
+  /*@ExceptionHandler({Exception.class})
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ExceptionResult handleException(Exception e) {
     // e
     return new ExceptionResult("InternalServerError");
-  }
+  }*/
 
   // İş kuralı
   @ExceptionHandler({BusinessException.class})
