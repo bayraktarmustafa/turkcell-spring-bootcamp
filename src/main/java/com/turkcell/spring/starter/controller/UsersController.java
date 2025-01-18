@@ -1,15 +1,16 @@
 package com.turkcell.spring.starter.controller;
 
+import com.turkcell.spring.starter.dto.user.LoginDto;
 import com.turkcell.spring.starter.entity.User;
 import com.turkcell.spring.starter.service.UserService;
+import com.turkcell.spring.starter.util.jwt.JwtService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
 public class UsersController {
   private final UserService userService;
-
-  public UsersController(UserService userService) {
+  public UsersController(UserService userService, JwtService jwtService) {
     this.userService = userService;
   }
 
@@ -20,8 +21,8 @@ public class UsersController {
   }
 
   @PostMapping("login")
-  public boolean login(@RequestBody User user)
+  public String login(@RequestBody LoginDto loginDto)
   {
-    return userService.login(user);
+    return userService.login(loginDto);
   }
 }
