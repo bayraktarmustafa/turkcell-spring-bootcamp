@@ -8,6 +8,9 @@ import com.turkcell.spring.starter.util.jwt.JwtService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class UserServiceImpl implements UserService{
   private final UserRepository userRepository;
@@ -39,6 +42,9 @@ public class UserServiceImpl implements UserService{
     if(!isPasswordCorrect)
       throw new BusinessException("Invalid or wrong credentials.");
 
-    return this.jwtService.generateToken(dbUser.getUsername());
+    Map<String,Object> roles = new HashMap<>();
+    roles.put("roles", dbUser.getOperationClaims().stream().map(c->c.getName()).toList());
+
+    return this.jwtService.generateToken(dbUser.getUsername(), roles);
   }
 }

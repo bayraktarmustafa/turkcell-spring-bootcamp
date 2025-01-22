@@ -1,10 +1,9 @@
 package com.turkcell.spring.starter.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +16,22 @@ public class User {
   private String username;
 
   private String password;
+
+  public List<OperationClaim> getOperationClaims() {
+    return operationClaims;
+  }
+
+  public void setOperationClaims(List<OperationClaim> operationClaims) {
+    this.operationClaims = operationClaims;
+  }
+
+  @ManyToMany()
+  @JoinTable(
+          name="user_operation_claims",
+          joinColumns = @JoinColumn(name="user_id"),
+          inverseJoinColumns = @JoinColumn(name="operation_claim_id")
+  )
+  private List<OperationClaim> operationClaims;
 
   public UUID getId() {
     return id;

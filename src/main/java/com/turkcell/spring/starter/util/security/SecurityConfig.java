@@ -2,6 +2,7 @@ package com.turkcell.spring.starter.util.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,7 +23,9 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((req) -> req
-                    .requestMatchers("/api/v1/products").authenticated()
+                    .requestMatchers(HttpMethod.DELETE,"/api/v1/products/**").hasAnyAuthority("Product.Delete", "Admin")
+                    .requestMatchers(HttpMethod.POST,"/api/v1/products/**").hasAnyAuthority("Product.Create", "Admin")
+                    .requestMatchers(HttpMethod.PUT, "/api/v1/products/**").hasAnyAuthority("Product.Update", "Admin")
                     .anyRequest().permitAll()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
