@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -26,6 +27,9 @@ public class Product {
   @ManyToOne()
   @JoinColumn(name="category_id")
   private Category category;
+
+  @OneToMany(mappedBy = "product")
+  private List<CartItems> cartItems;
 
   public Integer getId() {
     return id;
